@@ -24,16 +24,17 @@ public class Ventana extends javax.swing.JFrame {
      * Creates new form Ventana
      */
     public Ventana() {
-        initComponents();
         try { 
             
             clientes = new ClientesDto();
-        
+            
         } catch (SQLException ex) {
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        initComponents();
     }
     
     public List<Cliente> getClientes(){
@@ -43,9 +44,9 @@ public class Ventana extends javax.swing.JFrame {
         
         } catch (SQLException ex) {
             Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            return new ArrayList<>(); 
         }
+        
+        return new ArrayList<>(); 
     }
     /**
      * This method is called from within the constructor to initialize the form.
