@@ -46,12 +46,11 @@ public class ClientesJdbcOracleDao implements DaoClientes{
         
 //        procesamos los datos y los pasamos a objetos
         while (resultado.next()) {            
-//            Accedemos a las filas
-            int id = resultado.getInt("id");
-            String nombre = resultado.getString("nombre"); 
-            
-            Cliente c = new Cliente(id, nombre);
-            clientes.add(c); 
+
+            clientes.add( new Cliente(
+                    resultado.getInt("id"), 
+                    resultado.getString("nombre")
+            )); 
         }
 
         resultado.close();
