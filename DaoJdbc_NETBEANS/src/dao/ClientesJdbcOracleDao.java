@@ -2,23 +2,32 @@ package dao;
 
 import dao.interfaces.DaoClientes;
 import entidades.Cliente;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 import oracle.jdbc.OracleDriver;
 
 public class ClientesJdbcOracleDao implements DaoClientes{
 
-    public ClientesJdbcOracleDao() throws SQLException {
+    public ClientesJdbcOracleDao() throws SQLException, IOException {
 //        Cargar driver a la MVJ
         DriverManager.registerDriver(new OracleDriver());
         
 //        Leemos configuración BBDD de un fichero de propiedades
-        
+        Properties prop = new Properties();
+        prop.load(ClientesJdbcOracleDao
+                .class
+                .getResourceAsStream("../configuracion/Oracle.properties"));
 
 //        Creamos conexion a BBDD
-        Connection conexion = DriverManager.getConnection(url, user, password);
+        Connection conexion = DriverManager
+                .getConnection(
+                        prop.getProperty("url"), 
+                        prop.getProperty("user"), 
+                        prop.getProperty("password"));
     }
     
     @Override
