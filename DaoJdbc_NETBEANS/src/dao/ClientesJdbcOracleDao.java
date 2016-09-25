@@ -32,11 +32,7 @@ public class ClientesJdbcOracleDao implements DaoClientes {
         List<Cliente> clientes = new ArrayList<>();
 
 //        Creamos conexion a BBDD
-        Connection conexion = DriverManager
-                .getConnection(
-                        prop.getProperty("url"),
-                        prop.getProperty("user"),
-                        prop.getProperty("password"));
+        Connection conexion = this.getConexion(); 
 
 //        Hacemos la operación correspondiente
         Statement comando = conexion.createStatement();
@@ -72,12 +68,12 @@ public class ClientesJdbcOracleDao implements DaoClientes {
         ResultSet resultado = comando.executeQuery(sql);
 
 //        procesamos los datos y los pasamos a objetos
-        while (resultado.next()) {
+        if (resultado.next()) {
 
-            clientes.add(new Cliente(
+            cliente = new Cliente(
                     resultado.getInt("id"),
                     resultado.getString("nombre")
-            ));
+            );
         }
 
         resultado.close();
