@@ -114,13 +114,33 @@ public class ClientesJdbcOracleDao implements DaoClientes {
     }
 
     @Override
-    public void remove(Cliente entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void remove(Cliente entidad) throws SQLException {
+//        Creo conexion a BBDD
+        Connection conexion = this.getConexion();
+
+//        Hacemos la operación correspondiente
+        String sql = "DELETE FROM cliente WHERE id = ?"; 
+        PreparedStatement comando = conexion.prepareStatement(sql); 
+        comando.setInt(0, entidad.getId());
+        comando.executeUpdate(); 
+        
+        comando.close();
+        conexion.close();
     }
 
     @Override
-    public void update(Cliente entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Cliente entidad) throws SQLException {
+//        Creo conexion a BBDD
+        Connection conexion = this.getConexion();
+
+//        Hacemos la operación correspondiente
+        String sql = "UPDATE CLIENTE SET nombre = ? WHERE id = ?"; 
+        PreparedStatement comando = conexion.prepareStatement(sql); 
+        comando.setInt(0, entidad.getId());
+        comando.executeUpdate(); 
+        
+        comando.close();
+        conexion.close();
     }
 
     private Connection getConexion() throws SQLException {
