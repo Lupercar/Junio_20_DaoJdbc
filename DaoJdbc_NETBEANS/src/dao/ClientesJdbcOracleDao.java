@@ -5,6 +5,7 @@ import entidades.Cliente;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,7 +33,7 @@ public class ClientesJdbcOracleDao implements DaoClientes {
         List<Cliente> clientes = new ArrayList<>();
 
 //        Creamos conexion a BBDD
-        Connection conexion = this.getConexion(); 
+        Connection conexion = this.getConexion();
 
 //        Hacemos la operación correspondiente
         Statement comando = conexion.createStatement();
@@ -60,7 +61,7 @@ public class ClientesJdbcOracleDao implements DaoClientes {
         Cliente cliente = null;
 
 //        Creamos conexion a BBDD
-        Connection conexion = this.getConexion(); 
+        Connection conexion = this.getConexion();
 
 //        Hacemos la operación correspondiente
         Statement comando = conexion.createStatement();
@@ -84,8 +85,32 @@ public class ClientesJdbcOracleDao implements DaoClientes {
     }
 
     @Override
-    public void add(Cliente entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void add(Cliente entidad) throws SQLException {
+
+//        Creo conexion a BBDD
+        Connection conexion = this.getConexion();
+
+//        Hacemos la operación correspondiente
+//        Statement comando = conexion.createStatement();
+        
+//        No es la forma más correcta de poner el sql
+//        String sql = "INSERT INTO "
+//                + "cliente(id, nombre) "
+//                + "VALUES ("+cliente.getId()+", '"
+//                +cliente.getNombre()+"') "; 
+//        ResultSet resultado = comando.executeUpdate(sql);
+        
+//        INSERT INTO cliente(id, nombre) VALUES (1,'pepito');
+        
+//        Hacemos la operación correspondiente
+        String sql = "INSERT INTO cliente(id, nombre) VALUES (?,?)"; 
+        PreparedStatement comando = conexion.prepareStatement(sql); 
+        comando.setInt(0, entidad.getId());
+        comando.setString(1, entidad.getNombre());
+        comando.executeUpdate(); 
+        
+        comando.close();
+        conexion.close();
     }
 
     @Override
@@ -97,14 +122,14 @@ public class ClientesJdbcOracleDao implements DaoClientes {
     public void update(Cliente entidad) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    private Connection getConexion() throws SQLException{
+
+    private Connection getConexion() throws SQLException {
 //        Creamos conexion a BBDD
         Connection conexion = DriverManager
                 .getConnection(
                         prop.getProperty("url"),
                         prop.getProperty("user"),
                         prop.getProperty("password"));
-        return conexion; 
-    } 
+        return conexion;
+    }
 }//fin class dao.ClientesJdbcDao
