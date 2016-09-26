@@ -136,7 +136,8 @@ public class ClientesJdbcOracleDao implements DaoClientes {
 //        Hacemos la operación correspondiente
         String sql = "UPDATE CLIENTE SET nombre = ? WHERE id = ?"; 
         PreparedStatement comando = conexion.prepareStatement(sql); 
-        comando.setInt(0, entidad.getId());
+        comando.setString(0, entidad.getNombre());
+        comando.setInt(1, entidad.getId());
         comando.executeUpdate(); 
         
         comando.close();
