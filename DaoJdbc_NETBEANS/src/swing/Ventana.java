@@ -39,19 +39,20 @@ public class Ventana extends javax.swing.JFrame {
 
     public List<Cliente> getClientes() {
 
-        if (listadoClientes == null) {
+        if (this.listadoClientes == null) {
 
             try {
 
-                litadoClientes = clientes.get();
+                this.listadoClientes = clientes.get();
 
             } catch (SQLException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+                this.listadoClientes = new ArrayList<>(); 
             }
             
         }
         
-        return litadoClientes; 
+        return this.listadoClientes; 
     }
 
     /**
@@ -212,5 +213,5 @@ public class Ventana extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private ClientesDto clientes;
-    private List<Cliente> listadoClientes = new ArrayList<>(); 
+    private List<Cliente> listadoClientes = null; 
 }//fin JFrame swing.Ventana
