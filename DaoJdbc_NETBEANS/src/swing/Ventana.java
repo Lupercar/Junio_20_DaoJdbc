@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,12 +48,13 @@ public class Ventana extends javax.swing.JFrame {
 
             } catch (SQLException ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
-                this.listadoClientes = new ArrayList<>(); 
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+                this.listadoClientes = new ArrayList<>();
             }
-            
+
         }
-        
-        return this.listadoClientes; 
+
+        return this.listadoClientes;
     }
 
     /**
@@ -162,8 +164,22 @@ public class Ventana extends javax.swing.JFrame {
 
     private void bInsertarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInsertarClienteActionPerformed
         // TODO add your handling code here:
-        this.getClientes()
-                .add(new Cliente((Integer) spinnerID.getValue(), txtNombre.getText()));
+        Cliente c = new Cliente((Integer) spinnerID.getValue(), txtNombre.getText());
+
+        boolean continuar = true;
+        try {
+
+            this.clientes.add(c); //se lo pasamos a la BBDD 
+
+        } catch (SQLException ex) {
+            continuar = false;
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+        if (continuar) {
+            this.getClientes().add(c); //se lo paso a la Ventana
+        }
     }//GEN-LAST:event_bInsertarClienteActionPerformed
 
     /**
@@ -213,5 +229,5 @@ public class Ventana extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private ClientesDto clientes;
-    private List<Cliente> listadoClientes = null; 
+    private List<Cliente> listadoClientes = null;
 }//fin JFrame swing.Ventana
