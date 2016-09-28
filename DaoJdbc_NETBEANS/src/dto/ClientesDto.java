@@ -25,23 +25,23 @@ public class ClientesDto implements DaoClientes{
     }
 
     @Override
-    public Cliente get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Cliente get(int id) throws SQLException{
+//        Lo que nos da DAO lo pasamos al DTO
+        return dao.get(id); 
     }
 
     @Override
-    public void add(Cliente entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void add(Cliente entidad) throws SQLException{
+        dao.add(entidad);
     }
 
     @Override
-    public void remove(Cliente entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void remove(Cliente entidad) throws SQLException{
+        dao.remove(entidad);
     }
 
     @Override
-    public void update(Cliente entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Cliente entidad) throws SQLException{
+        dao.update(entidad);
     }
-    
 }//fin class dto.ClienteDto
