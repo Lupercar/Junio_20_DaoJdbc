@@ -105,8 +105,10 @@ public class ClientesJdbcOracleDao implements DaoClientes {
 //        Hacemos la operación correspondiente
         String sql = "INSERT INTO cliente(id, nombre) VALUES (?,?)"; 
         PreparedStatement comando = conexion.prepareStatement(sql); 
-        comando.setInt(0, entidad.getId());
-        comando.setString(1, entidad.getNombre());
+        
+        comando.setInt(1, entidad.getId()); 
+        comando.setString(2, entidad.getNombre());
+        
         comando.executeUpdate(); 
         
         comando.close();
@@ -121,7 +123,7 @@ public class ClientesJdbcOracleDao implements DaoClientes {
 //        Hacemos la operación correspondiente
         String sql = "DELETE FROM cliente WHERE id = ?"; 
         PreparedStatement comando = conexion.prepareStatement(sql); 
-        comando.setInt(0, entidad.getId());
+        comando.setInt(1, entidad.getId());
         comando.executeUpdate(); 
         
         comando.close();
@@ -136,8 +138,8 @@ public class ClientesJdbcOracleDao implements DaoClientes {
 //        Hacemos la operación correspondiente
         String sql = "UPDATE CLIENTE SET nombre = ? WHERE id = ?"; 
         PreparedStatement comando = conexion.prepareStatement(sql); 
-        comando.setString(0, entidad.getNombre());
-        comando.setInt(1, entidad.getId());
+        comando.setString(1, entidad.getNombre());
+        comando.setInt(2, entidad.getId());
         comando.executeUpdate(); 
         
         comando.close();
